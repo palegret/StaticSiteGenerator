@@ -19,7 +19,7 @@ class TestHtmlNode(unittest.TestCase):
     def test_html_has_no_props(self):
         node = HtmlNode()
         node_props_html = node.props_to_html()
-        expected = ' '
+        expected = ''
         self.assertEqual(node_props_html, expected)
 
     def test_html_has_value_with_one_prop(self):
