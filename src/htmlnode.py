@@ -1,14 +1,4 @@
 class HtmlNode:
-    """
-    An HTMLNode without:
-    ============================================
-    a tag      -->   renders as raw text
-    a value    -->   is assumed to have children
-    children   -->   is assumed to have a value
-    props      -->   won't have any attributes
-    ============================================
-    """
-
     def __init__(self, tag=None, value=None, children=None, props=None):
         self.tag = tag
         self.value = value
@@ -20,7 +10,7 @@ class HtmlNode:
 
     def props_to_html(self):
         if not self.props:
-            return " "
+            return ""
         
         props_html = " ".join(map(lambda item: f'{item[0]}="{item[1]}"', self.props.items()))
 
