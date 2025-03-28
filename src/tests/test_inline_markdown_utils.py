@@ -3,6 +3,7 @@ import unittest
 from models.textnode import TextNode, TextType
 
 from shared.inline_markdown_utils import (
+    text_to_textnodes,
     split_nodes_delimiter,
     split_nodes_image,
     split_nodes_link,
@@ -60,6 +61,19 @@ class TestInlineMarkdownUtils(unittest.TestCase):
             TextNode(" word", TextType.TEXT),
         ]
 
+        self.assertListEqual(expected, new_nodes)
+
+    def test_delim_bold_and_italic(self):
+        old_nodes = [TextNode("**bold** and _italic_", TextType.TEXT)]
+        new_nodes = split_nodes_delimiter(old_nodes, "**", TextType.BOLD)
+        new_nodes = split_nodes_delimiter(new_nodes, "_", TextType.ITALIC)
+
+        expected = [
+            TextNode("bold", TextType.BOLD),
+            TextNode(" and ", TextType.TEXT),
+            TextNode("italic", TextType.ITALIC),
+        ]
+        
         self.assertListEqual(expected, new_nodes)
 
     def test_delim_code(self):
@@ -133,6 +147,25 @@ class TestInlineMarkdownUtils(unittest.TestCase):
         ]
 
         self.assertListEqual(expected, new_nodes)
+
+
+    def test_text_to_textnodes(self):
+        nodes = text_to_textnodes("This is **text** with an _italic_ word and a `code block` and an ![image](https://i.imgur.com/zjjcJKZ.png) and a [link](https://boot.dev)")
+
+        expected = [
+            TextNode("This is ", TextType.TEXT),
+            TextNode("text", TextType.BOLD),
+            TextNode(" with an ", TextType.TEXT),
+            TextNode("italic", TextType.ITALIC),
+            TextNode(" word and a ", TextType.TEXT),
+            TextNode("code block", TextType.CODE),
+            TextNode(" and an ", TextType.TEXT),
+            TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+            TextNode(" and a ", TextType.TEXT),
+            TextNode("link", TextType.LINK, "https://boot.dev"),
+        ]
+
+        self.assertListEqual(expected, nodes)
 
 
 if __name__ == "__main__":
