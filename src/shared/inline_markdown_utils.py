@@ -3,17 +3,6 @@ import re
 from models.textnode import TextNode, TextType
 
 
-"""
-old_nodes = [
-    TextNode("This is text with a **bolded** word", TextType.TEXT)
-]
-new_nodes = split_nodes_delimiter(
-    old_nodes,
-    delimiter="**",
-    text_type=TextType.BOLD
-)
-"""
-
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
 
@@ -23,7 +12,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
             continue
 
         split_nodes = []
-        sections = old_node.text.split(delimiter)
+        sections = old_node.text.split(delimiter) 
 
         if len(sections) % 2 == 0:
             raise ValueError("Invalid markdown, formatted section not closed")
