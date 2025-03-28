@@ -1,6 +1,6 @@
 import unittest
-from leafnode import LeafNode
-from parentnode import ParentNode
+from models.leafnode import LeafNode
+from models.parentnode import ParentNode
 
 
 class TestHTMLNode(unittest.TestCase):

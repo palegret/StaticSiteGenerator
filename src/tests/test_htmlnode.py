@@ -1,13 +1,6 @@
 import unittest
 
-from htmlnode import HtmlNode
-
-"""
-Create some tests for the HTMLNode class (at least 3).
-Create a few nodes and make sure the props_to_html method works as expected.
-When you're satisfied that your class is behaving as expected and your unit tests
-are running successfully, run and submit the tests.
-"""
+from models.htmlnode import HtmlNode
 
 class TestHtmlNode(unittest.TestCase):
     def test_html_has_value_with_props(self):

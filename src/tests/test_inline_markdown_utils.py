@@ -1,8 +1,8 @@
 import unittest
 
-from textnode import TextNode, TextType
+from models.textnode import TextNode, TextType
 
-from inline_markdown import (
+from shared.inline_markdown_utils import (
     split_nodes_delimiter,
     split_nodes_image,
     split_nodes_link,
@@ -11,7 +11,7 @@ from inline_markdown import (
 )
 
 
-class TestInlineMarkdown(unittest.TestCase):
+class TestInlineMarkdownUtils(unittest.TestCase):
     def test_delim_bold(self):
         old_nodes = [TextNode("This is text with a **bolded** word", TextType.TEXT)]
         new_nodes = split_nodes_delimiter(old_nodes, "**", TextType.BOLD)
