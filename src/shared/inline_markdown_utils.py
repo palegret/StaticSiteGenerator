@@ -3,6 +3,17 @@ import re
 from models.textnode import TextNode, TextType
 
 
+"""
+old_nodes = [
+    TextNode("This is text with a **bolded** word", TextType.TEXT)
+]
+new_nodes = split_nodes_delimiter(
+    old_nodes,
+    delimiter="**",
+    text_type=TextType.BOLD
+)
+"""
+
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
 
@@ -16,7 +27,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
         if len(sections) % 2 == 0:
             raise ValueError("Invalid markdown, formatted section not closed")
-        
+
         for i in range(len(sections)):
             if not sections[i]:
                 continue
@@ -51,7 +62,7 @@ def split_nodes_image(old_nodes):
 
             if len(sections) != 2:
                 raise ValueError("invalid markdown, image section not closed")
-            
+
             if sections[0] != "":
                 new_nodes.append(TextNode(sections[0], TextType.TEXT))
 
@@ -84,7 +95,7 @@ def split_nodes_link(old_nodes):
 
             if len(sections) != 2:
                 raise ValueError("invalid markdown, link section not closed")
-            
+
             if sections[0] != "":
                 new_nodes.append(TextNode(sections[0], TextType.TEXT))
 
@@ -117,3 +128,23 @@ def text_to_textnodes(text):
     nodes = split_nodes_image(nodes)
     nodes = split_nodes_link(nodes)
     return nodes
+
+
+def markdown_to_blocks(markdown):
+    if not isinstance(markdown, str):
+        raise TypeError("markdown must be a string")
+    
+    if not markdown:
+        return []
+
+    blocks = markdown.split("\n\n")
+
+    cleaned_blocks = []
+
+    for block in blocks:
+        stripped_block = block.strip()
+
+        if stripped_block:
+            cleaned_blocks.append(stripped_block)
+
+    return cleaned_blocks

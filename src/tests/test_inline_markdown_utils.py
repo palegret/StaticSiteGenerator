@@ -9,6 +9,7 @@ from shared.inline_markdown_utils import (
     split_nodes_link,
     extract_markdown_links,
     extract_markdown_images,
+    markdown_to_blocks
 )
 
 
@@ -166,6 +167,29 @@ class TestInlineMarkdownUtils(unittest.TestCase):
         ]
 
         self.assertListEqual(expected, nodes)
+
+
+def test_markdown_to_blocks(self):
+    markdown = """
+This is **bolded** paragraph
+
+This is another paragraph with _italic_ text and `code` here
+This is the same paragraph on a new line
+
+- This is a list
+- with items
+"""
+    
+    blocks = markdown_to_blocks(markdown)
+
+    self.assertEqual(
+        blocks,
+        [
+            "This is **bolded** paragraph",
+            "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line",
+            "- This is a list\n- with items",
+        ],
+    )
 
 
 if __name__ == "__main__":
