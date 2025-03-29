@@ -1,6 +1,7 @@
 import re
 
-from models.textnode import TextNode, TextType
+from models.textnode import TextNode
+from models.texttype import TextType
 
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
@@ -117,23 +118,3 @@ def text_to_textnodes(text):
     nodes = split_nodes_image(nodes)
     nodes = split_nodes_link(nodes)
     return nodes
-
-
-def markdown_to_blocks(markdown):
-    if not isinstance(markdown, str):
-        raise TypeError("markdown must be a string")
-    
-    if not markdown:
-        return []
-
-    blocks = markdown.split("\n\n")
-
-    cleaned_blocks = []
-
-    for block in blocks:
-        stripped_block = block.strip()
-
-        if stripped_block:
-            cleaned_blocks.append(stripped_block)
-
-    return cleaned_blocks
