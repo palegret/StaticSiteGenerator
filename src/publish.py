@@ -2,8 +2,6 @@ import os
 import shutil
 
 def publish_static_content(source_directory, destination_directory):
-    print("Publishing static files...")
-
     if not os.path.exists(source_directory):
         print(f"Source directory '{source_directory}' does not exist.")
         return
