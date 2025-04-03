@@ -4,19 +4,19 @@ from pathlib import Path
 from shared.block_markdown_utils import markdown_to_html_node
 
 
-def generate_pages_recursive(source_path, template_path, destination_path):
+def generate_pages_recursive(source_path, template_path, destination_path, basepath="/"):
     for filename in os.listdir(source_path):
         from_path = os.path.join(source_path, filename)
         dest_path = os.path.join(destination_path, filename)
 
         if os.path.isfile(from_path):
             dest_path = Path(dest_path).with_suffix(".html")
-            generate_page(from_path, template_path, dest_path)
+            generate_page(from_path, template_path, dest_path, basepath)
         else:
-            generate_pages_recursive(from_path, template_path, dest_path)
+            generate_pages_recursive(from_path, template_path, dest_path, basepath)
             
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath="/"):
     print("Generating page...")
     print(f" * {from_path} {template_path} -> {dest_path}")
     
@@ -34,6 +34,8 @@ def generate_page(from_path, template_path, dest_path):
     title = extract_title(markdown_content)
     template = template.replace("{{ Title }}", title)
     template = template.replace("{{ Content }}", html)
+    template = template.replace("href=\"/", f"href=\"{basepath}")
+    template = template.replace("src=\"/", f"src=\"{basepath}")
 
     dest_dir_path = os.path.dirname(dest_path)
 
@@ -44,8 +46,8 @@ def generate_page(from_path, template_path, dest_path):
     to_file.write(template)
 
 
-def extract_title(md):
-    lines = md.split("\n")
+def extract_title(markdown):
+    lines = markdown.split("\n")
 
     for line in lines:
         if line.startswith("# "):

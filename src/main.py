@@ -1,23 +1,31 @@
+import sys
+
 from generate import generate_pages_recursive
 from publish import publish_static_content
 
 
 def main():
-    print("Starting the Static Site Generator...")
+    print("Welcome to the Static Site Generator!")
+
+    basepath = "/"
+
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
 
     print("Publishing static files...")
 
     publish_static_content(
         source_directory="./static", 
-        destination_directory = "./public"
+        destination_directory = "./docs"
     )
 
-    print("Generating site content...")
+    print(f"Generating site content, basepath is set to '{basepath}'...")
 
     generate_pages_recursive(
         source_path="./content",
         template_path="./template.html",
-        destination_path="./public",
+        destination_path="./docs",
+        basepath=basepath
     )
     
 
